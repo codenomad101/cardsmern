@@ -17,9 +17,7 @@ app.post('/decks',async (req:Request,res:Response)=>{
 })
 
 
-
-
-mongoose.connect(process.env.MONGO_URL ?? "").then(()=>{
+mongoose.connect(process.env.MONGO_URL!).then(()=>{
 console.log("listening on port 5000");   
 app.listen(5000);
 })
