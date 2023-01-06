@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import reactLogo from "./assets/react.svg";
 import "./App.css";
 
 function App() {
   const [title, setTitle] = useState("");
+  const [decks, setDecks]=useState([]);
   async function createDeck(e: React.FormEvent) {
     e.preventDefault();
    await  fetch("http://localhost:5000/decks", {
@@ -16,9 +17,26 @@ function App() {
     });
     setTitle('');
   }
+
+  useEffect(()=>{
+    async function fetchDesks(){
+      const response=await fetch("http://localhost:5000/decks");
+      const newDecks=await response.json();
+      setDecks(newDecks);
+    }
+   fetchDesks();
+  },[]);
+
   console.log(title)
   return (
-    <div className="App" style={{ display: "flex" }}>
+    <div className="App" >
+    <div className='decks'>
+     {
+      decks.map((deck)=>(
+        <li key={deck._id}>{deck.title}</li>
+      ))
+     }
+    </div>
       <form onSubmit={createDeck}>
         <label htmlFor="deck-title">Deck Title</label>
         <input
@@ -28,7 +46,7 @@ function App() {
             setTitle(e.target.value);
           }}
         />
-         <button>Create Deck</button>
+         <button className="button">Create Deck</button>
       </form>
      
     </div>
