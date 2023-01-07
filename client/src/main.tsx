@@ -16,10 +16,7 @@ const router=createBrowserRouter([
   path:'/decks/:deckId',
   element:<Deck />
   },
-  {
-    path:"/hello",
-    element:<div>Hello world</div>
-  },
+  
   {
     path:"*",
     element:<div> 404 page not found<br/>
